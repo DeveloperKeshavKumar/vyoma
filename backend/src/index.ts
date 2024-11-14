@@ -1,13 +1,15 @@
-import express from 'express';
+import express, { json, urlencoded } from 'express';
+import router from './routes';
 
 const app = express();
 const PORT = process.env.PORT || 3001;
 
-app.get('/', (req, res)=>{
-   res.send("Server is up and running");
-})
+app.use(urlencoded({ extended: false }));
+app.use(json());
+app.use('/', router);
 
-app.listen(PORT, ()=>console.log(`Running on http://localhost:${PORT}`)
-)
+app.listen(PORT, () => {
+   console.log(`Running on http://localhost:${PORT}`)
+})
 
 // use node --import=jsx --watch src/index.ts
