@@ -1,3 +1,4 @@
 import { productsTable } from "./product";
+import { usersTable } from "./user";
 
-export { productsTable };
+export { productsTable, usersTable };
