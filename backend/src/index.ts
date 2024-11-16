@@ -11,5 +11,3 @@ app.use('/', router);
 app.listen(PORT, () => {
    console.log(`Running on http://localhost:${PORT}`)
 })
-
-// use node --import=jsx --watch src/index.ts
