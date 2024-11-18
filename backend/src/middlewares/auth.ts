@@ -2,7 +2,6 @@ import { Response, Request, NextFunction } from "express";
 import jwt, { JwtPayload } from "jsonwebtoken";
 
 export const verifytoken = async (req: Request, res: Response, next: NextFunction): Promise<any> => {
-   console.log(req.headers.authorization);
    try {
       const authHeader = req.headers.authorization;
 
@@ -27,5 +26,26 @@ export const verifytoken = async (req: Request, res: Response, next: NextFunctio
          success: false,
          error: error,
       })
+   }
+}
+
+export const verifyRole = (role: string) => {
+   return async (req: Request, res: Response, next: NextFunction) => {
+      try {
+         if (req.user?.role === role) {
+            next()
+         } else {
+            res.status(401).json({
+               success: false,
+               error: "Role not matched for request"
+            })
+         }
+
+      } catch (error) {
+         res.status(500).json({
+            success: false,
+            error: error,
+         })
+      }
    }
 }

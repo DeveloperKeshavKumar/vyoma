@@ -38,7 +38,6 @@ export const getProductById = async (req: Request, res: Response) => {
 }
 export const createProduct = async (req: Request, res: Response) => {
    try {
-      console.log(req.body);
       const [response] = await db.insert(productsTable).values(req.body).returning();
       res.status(201).json({
          success: true,

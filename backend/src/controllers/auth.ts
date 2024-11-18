@@ -9,10 +9,10 @@ export const registerUser = async (req: Request, res: Response): Promise<void> =
    try {
       const { password, email, name, role } = req.body;
 
-      if (!email || !password || !name || !role) {
+      if (!email || !password || !name ) {
          res.status(400).json({
             success: false,
-            message: "Email and password are required",
+            message: "Email, name and password are required",
          });
          return;
       }
@@ -37,7 +37,6 @@ export const registerUser = async (req: Request, res: Response): Promise<void> =
          user: userResponse,
       });
    } catch (error: any) {
-      console.error("Error in registerUser:", error.message);
       res.status(500).json({
          success: false,
          message: "Internal Server Error",
@@ -95,7 +94,6 @@ export const loginUser = async (req: Request, res: Response): Promise<void> => {
          },
       });
    } catch (error: any) {
-      console.error("Error in loginUser:", error.message);
       res.status(500).json({
          success: false,
          message: "Internal Server Error",
