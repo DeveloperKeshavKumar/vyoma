@@ -1,5 +1,5 @@
 import { createInsertSchema } from "drizzle-zod";
-import { productsTable } from "../schemas";
+import { productsTable } from "../schemas/index.js";
 
 // const createProductSchema = z.object({
 //    name: string(),

@@ -1,4 +1,4 @@
-import { productsTable } from "./product";
-import { usersTable } from "./user";
+import { productsTable } from "./product.js";
+import { usersTable } from "./user.js";
 
 export { productsTable, usersTable };

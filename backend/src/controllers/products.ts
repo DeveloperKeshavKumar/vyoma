@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
-import { db } from '../config/db';
-import { productsTable } from '../schemas';
+import { db } from '../config/db.js';
+import { productsTable } from '../schemas/index.js';
 import { eq } from 'drizzle-orm';
 
 export const listProducts = async (req: Request, res: Response) => {
