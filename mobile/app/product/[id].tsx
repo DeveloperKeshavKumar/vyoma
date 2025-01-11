@@ -5,7 +5,7 @@ import { VStack } from "@/components/ui/vstack";
 import { Heading } from "@/components/ui/heading";
 import { Box } from "@/components/ui/box";
 import { Button, ButtonText } from "@/components/ui/button";
-import { useLocalSearchParams } from "expo-router";
+import { Stack, useLocalSearchParams } from "expo-router";
 import products from "@/assets/products.json";
 
 interface ProductType {
@@ -24,6 +24,7 @@ export default function ProductDetails() {
    }
    return (
       <Card className="p-5 rounded-lg max-w-[100%] flex-1">
+         <Stack.Screen options={{ title: product.name }} />
          <Image
             source={{
                uri: product.image,
