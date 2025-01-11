@@ -68,10 +68,23 @@ export const createOrder = async (req: Request, res: Response) => {
 }
 export const updateOrder = async (req: Request, res: Response) => {
    try {
+      const id = parseInt(req.params.id);
+      const [updatedOrder] = await db.update(ordersTable).set(req.body).where(eq(ordersTable.id, id)).returning();
 
-      res.send('Update Order');
-   } catch (error) {
-
+      if (!updatedOrder) {
+         res.status(404).json({
+            success: false,
+            message: "Order not found"
+         });
+      } else {
+         res.status(200).json({ updatedOrder });
+      }
+   } catch (error: any) {
+      res.status(500).json({
+         success: false,
+         message: "Internal Server Error",
+         error: error.message,
+      });
    }
 }
 export const deleteOrder = async (req: Request, res: Response) => {

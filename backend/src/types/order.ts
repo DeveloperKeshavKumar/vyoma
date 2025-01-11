@@ -12,7 +12,7 @@ export const createOrderSchema = createInsertSchema(ordersTable).omit({
 
 export const createOrderItemsSchema = createInsertSchema(orderItemsTable).omit({
    id: true,
-   orderId:true
+   orderId: true
 });
 
 export const createOrderWithItemsSchema = z.object({
@@ -21,8 +21,6 @@ export const createOrderWithItemsSchema = z.object({
 })
 
 
-export const updateOrderSchema = createInsertSchema(ordersTable).omit({
-   id: true,
-   userId: true,
-   createdAt: true
-}).partial();
+export const updateOrderSchema = createInsertSchema(ordersTable).pick({
+   status: true
+})
