@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import { db } from '../config/db.js';
 import { orderItemsTable, ordersTable } from '../schemas/order.js';
-import { eq } from 'drizzle-orm/';
+import { eq } from 'drizzle-orm';
 
 
 // if user.role === 'admin, return all orders
