@@ -6,40 +6,50 @@ import { Heading } from "@/components/ui/heading";
 import { Box } from "@/components/ui/box";
 import { Button, ButtonText } from "@/components/ui/button";
 import { Stack, useLocalSearchParams } from "expo-router";
-import products from "@/assets/products.json";
-
-interface ProductType {
-   id: number;
-   name: string;
-   description: string;
-   image: string;
-   price: number;
-}
+// import products from "@/assets/products.json";
+import { getProductById } from "@/api/products";
+import { useQuery } from "@tanstack/react-query";
+import { ActivityIndicator } from "react-native";
 
 export default function ProductDetails() {
+
    const { id } = useLocalSearchParams();
-   const product: ProductType = products.find((product) => product.id === Number(id));
-   if(!product) {
+   const { data, isLoading, error } = useQuery({ queryKey: ["product", id], queryFn: () => getProductById(Number(id)) });
+   // const [product, setProduct] = useState<ProductType | null>(null);
+   // useEffect(() => {
+   //    const fetchProduct = async (id: number) => {
+   //       const data = await getProductById(id);
+   //       console.log(data);
+   //       setProduct(data.product);
+   //    }
+   //    fetchProduct(Number(id));
+   // }, []);
+
+   if (isLoading) {
+      return <ActivityIndicator />
+   }
+
+   if (error) {
       return <Text>Product not found</Text>
    }
    return (
       <Card className="p-5 rounded-lg max-w-[100%] flex-1">
-         <Stack.Screen options={{ title: product.name }} />
+         <Stack.Screen options={{ title: data.product.name }} />
          <Image
             source={{
-               uri: product.image,
+               uri: data.product.image,
             }}
             className="mb-6 h-[240px] w-full rounded-md aspect-[4/3]"
-            alt={`${product.name} image`}
+            alt={`${data.product.name} image`}
             resizeMode="contain"
          />
-         <Text>{product.name}</Text>
+         <Text>{data.product.name}</Text>
 
          <VStack className="mb-6" >
             <Heading size="md" className="mb-4">
-               ${product.price}
+               ${data.product.price}
             </Heading>
-            <Text>{product.description}</Text>
+            <Text>{data.product.description}</Text>
          </VStack>
          <Box className="flex-col sm:flex-row">
             <Button className="px-4 py-2 mr-0 mb-3 sm:mr-3 sm:mb-0 sm:flex-1">
