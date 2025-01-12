@@ -5,11 +5,13 @@ import { VStack } from "@/components/ui/vstack";
 import { Heading } from "@/components/ui/heading";
 import { Box } from "@/components/ui/box";
 import { Button, ButtonText } from "@/components/ui/button";
-import { Stack, useLocalSearchParams } from "expo-router";
+import { Link, Redirect, Stack, useLocalSearchParams } from "expo-router";
 // import products from "@/assets/products.json";
 import { getProductById } from "@/api/products";
 import { useQuery } from "@tanstack/react-query";
 import { ActivityIndicator } from "react-native";
+import { useCart } from "@/store/cartStore";
+import { useEffect } from "react";
 
 export default function ProductDetails() {
 
@@ -24,6 +26,11 @@ export default function ProductDetails() {
    //    }
    //    fetchProduct(Number(id));
    // }, []);
+
+   const addProduct = useCart(state => state.addProduct);
+   const addToCart = () => {
+      addProduct(data.product)
+   }
 
    if (isLoading) {
       return <ActivityIndicator />
@@ -52,17 +59,19 @@ export default function ProductDetails() {
             <Text>{data.product.description}</Text>
          </VStack>
          <Box className="flex-col sm:flex-row">
-            <Button className="px-4 py-2 mr-0 mb-3 sm:mr-3 sm:mb-0 sm:flex-1">
+            <Button onPress={addToCart} className="px-4 py-2 mr-0 mb-3 sm:mr-3 sm:mb-0 sm:flex-1">
                <ButtonText size="sm">Add to cart</ButtonText>
             </Button>
-            <Button
-               variant="outline"
-               className="px-4 py-2 border-outline-300 sm:flex-1"
-            >
-               <ButtonText size="sm" className="text-typography-600">
-                  Wishlist
-               </ButtonText>
-            </Button>
+            <Link href='/cart' asChild>
+               <Button
+                  variant="outline"
+                  className="px-4 py-2 border-outline-300 sm:flex-1"
+               >
+                  <ButtonText size="sm" className="text-typography-600">
+                     Wishlist
+                  </ButtonText>
+               </Button>
+            </Link>
          </Box>
       </Card>
    )
