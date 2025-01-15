@@ -10,7 +10,7 @@ export async function handleLogin(email: string, password: string) {
    try {
       const res = await login(email, password);
       if (res.token) {
-         cookies().set('token', res.token);
+         cookies().set('token', res.token, { maxAge: 10800 });
          redirectUrl = '/';
       }
    } catch (error) {
@@ -27,7 +27,7 @@ export async function handleSignup(email: string, password: string) {
    try {
       const res = await signup(email, password);
       if (res.token) {
-         cookies().set('token', res.token);
+         cookies().set('token', res.token, { maxAge: 10800 });
          redirectUrl = '/';
       }
    } catch (error) {
