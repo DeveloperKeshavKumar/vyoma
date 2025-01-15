@@ -4,19 +4,24 @@ import { HStack } from '@/components/ui/hstack';
 import { Text } from '@/components/ui/text';
 import dayjs from 'dayjs';
 import { Heading } from '@/components/ui/heading';
+import StatusSelector from './StatusSelector';
+import { Box } from '@/components/ui/box';
 
 export default async function OrderPage({ params }: { params: { id: string }; }) {
    const order = await fetchOrder(Number(params.id));
 
    return (
       <div>
-         <Heading className='mt-4 text-white text-center'>Order Details</Heading>
-         <Card className='mt-4 max-w-[50%] mx-auto'>
-            <HStack className="p-4 border-b border-gray-200 gap-4">
-               <Text className="font-bold">#{order?.id}</Text>
+         <Heading className='text-white text-center mt-4'>Order Details</Heading>
+         <Card className='w-[50%] mx-auto my-4'>
+            <Box className="p-4 border-b border-gray-200 gap-4">
+               <Text className="font-bold">Order #{order?.id}</Text>
                <Text>{dayjs(order?.createdAt).format('DD/MM/YYYY HH:mm')}</Text>
-               <Text>{order?.status}</Text>
-            </HStack>
+               <Box className="w-48">
+                  <StatusSelector status={order?.status} id={order?.id} />
+               </Box>
+            </Box>
+
             <Heading className="mt-5 text-gray-500">Items</Heading>
             {order?.items.map((orderItem) => (
                <HStack key={orderItem.id} className="p-4 0 gap-4">
