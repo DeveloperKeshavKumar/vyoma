@@ -8,7 +8,7 @@ type DashboardLayoutProps = {
 export default function LoginLayout({ children }: DashboardLayoutProps) {
    const token = cookies().get('token')?.value;
    if (!!token) {
-      return redirect('/dashboard');
+      return redirect('/');
    }
    return <div>{children}</div>;
 }

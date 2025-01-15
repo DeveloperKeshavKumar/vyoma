@@ -8,7 +8,7 @@ export default async function ProductsPage() {
    const products = await listProducts();
 
    return (
-      <div className="flex flex-row flex-wrap gap-4 mx-4 my-4">
+      <div className="flex flex-row flex-wrap gap-4">
          <Link href="/products/create">
             <Card className="w-full h-full min-w-[300px] flex items-center justify-center">
                <Icon as={AddIcon} className="w-10 h-10 color-slate-400" />

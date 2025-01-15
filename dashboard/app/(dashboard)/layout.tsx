@@ -21,12 +21,12 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
    }
 
    return (
-      <div className="h-screen overflow-hidden">
+      <div className="h-screen overflow-hidden ">
          {/* Header */}
          <Header />
          <HStack className="h-full">
             <Sidebar />
-            <Box className="flex-1 overflow-y-auto bg-gray-100 p-3">{children}</Box>
+            <Box className="flex-1 overflow-y-auto bg-gray-200 p-3">{children}</Box>
          </HStack>
          <MobileNavbar />
       </div>
@@ -36,7 +36,7 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
 function Header() {
    return (
       <HStack className="p-3 border-b justify-between items-center flex flex-1">
-         <Heading className='text-white'>Dashboard</Heading>
+         <Heading >Vyoma Dashboard</Heading>
          <Avatar>
             <AvatarFallbackText>KK</AvatarFallbackText>
          </Avatar>
@@ -47,11 +47,14 @@ function Header() {
 function Sidebar() {
    return (
       <VStack className="p-3 pr-10 border-r gap-3 hidden md:flex">
+         <Link href="/">
+            <Text >Homepage</Text>
+         </Link>
          <Link href="/products">
-            <Text className='text-white'>Products</Text>
+            <Text >Products</Text>
          </Link>
          <Link href="/orders">
-            <Text className='text-white'>Orders</Text>
+            <Text >Orders</Text>
          </Link>
       </VStack>
    );

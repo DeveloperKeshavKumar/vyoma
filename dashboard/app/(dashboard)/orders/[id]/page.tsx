@@ -11,8 +11,6 @@ export default async function OrderPage({ params }: { params: { id: string }; })
    const order = await fetchOrder(Number(params.id));
 
    return (
-      <div>
-         <Heading className='text-white text-center mt-4'>Order Details</Heading>
          <Card className='w-[50%] mx-auto my-4'>
             <Box className="p-4 border-b border-gray-200 gap-4">
                <Text className="font-bold">Order #{order?.id}</Text>
@@ -32,6 +30,5 @@ export default async function OrderPage({ params }: { params: { id: string }; })
                </HStack>
             ))}
          </Card>
-      </div>
    );
 }

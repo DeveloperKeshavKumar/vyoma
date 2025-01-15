@@ -23,7 +23,7 @@ export default function CreateProductPage() {
             className="p-4 border rounded-lg max-w-[500px] w-full border-outline-300 bg-white m-2"
          >
             <VStack space="xl">
-               <Heading className="text-typography-900 leading-3 pt-3">
+               <Heading className="text-typography-black leading-3 pt-3">
                   Create product
                </Heading>
                <VStack space="xs">

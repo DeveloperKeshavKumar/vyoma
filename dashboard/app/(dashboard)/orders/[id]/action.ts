@@ -4,7 +4,7 @@ import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 
 export async function updateOrderStatus(id: number, status: string) {
-   const redirectUrl: string = `/dashboard/orders/${id}`;
+   const redirectUrl: string = `/orders/${id}`;
    try {
       const token = cookies().get('token')?.value;
       const response = await fetch(`${API_URL}/orders/${id}`, {
