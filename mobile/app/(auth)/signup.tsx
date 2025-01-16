@@ -29,7 +29,7 @@ export default function SignupPage() {
    const signinMutation = useMutation({
       mutationFn: () => registerUser(email, password, name),
       onSuccess: () => {
-         router.push('/login')        
+         router.push('/login')
       },
       onError: (error) => {
          console.log(error);
@@ -62,12 +62,12 @@ export default function SignupPage() {
                   </InputSlot>
                </Input>
             </VStack>
-            <VStack space="sm">
+            <VStack space="md">
                <Text className="text-typography-500">Password</Text>
-               <Input className="text-center">
-                  <InputField value={password} onChangeText={setPassword} type={showPassword ? "text" : "password"} />
+               <Input>
+                  <InputField value={password} onChangeText={setPassword} type={showPassword ? "text" : "password"} placeholder="Enter password" />
                   <InputSlot className="pr-3" onPress={handleState}>
-                     <InputIcon className="px-3 mr-4"
+                     <InputIcon className="mr-4"
                         as={showPassword ? EyeIcon : EyeOffIcon}
                      />
                   </InputSlot>

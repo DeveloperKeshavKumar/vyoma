@@ -30,11 +30,11 @@ export default function LoginPage() {
    const loginMutation = useMutation({
       mutationFn: () => loginUser(email, password),
       onSuccess: (data) => {
-         if (data.user && data.token) {
-            setUser(data.user);
+         if (data && data.token) {
+            setUser(data);
             setToken(data.token);
          }
-         router.push('/')
+         router.push('/');
       },
       onError: (error) => {
          console.log(error);
@@ -46,7 +46,7 @@ export default function LoginPage() {
    }
 
    return (
-      <FormControl className="p-4 rounded-lg" isInvalid={loginMutation.error}>
+      <FormControl className="p-4 rounded-lg mx-auto max-w-[100%]" isInvalid={loginMutation.error}>
          <VStack space="xl">
             <Heading className="text-center ">Login to your account</Heading>
             <VStack space="md">
