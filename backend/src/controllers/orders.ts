@@ -44,7 +44,7 @@ export const getOrderById = async (req: Request, res: Response) => {
 }
 export const createOrder = async (req: Request, res: Response) => {
    try {
-      const { order, items } = req.body();
+      const { order, items } = req.body;
       const userId = req.user?.id;
       if (!userId) {
          res.status(403).json({ success: false, message: "User not authoirized" })
