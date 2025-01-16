@@ -1,37 +1,48 @@
-import { Button, ButtonText } from "@/components/ui/button";
-import { HStack } from "@/components/ui/hstack";
-import { Text } from "@/components/ui/text";
-import { VStack } from "@/components/ui/vstack";
-import { useCart } from "@/store/cartStore";
-import { Link } from "expo-router";
-import { StyleSheet, View, FlatList } from "react-native";
+import { HStack } from '@/components/ui/hstack';
+import { VStack } from '@/components/ui/vstack';
+import { Text } from '@/components/ui/text';
+import { useCart } from '@/store/cartStore';
+import { View, FlatList } from 'react-native';
+import { Button, ButtonText } from '@/components/ui/button';
+import { Redirect } from 'expo-router';
+import { useMutation } from '@tanstack/react-query';
+import { createOrder } from '@/api/orders';
 
 export default function CartPage() {
   const cartItems = useCart(state => state.items);
   const resetCart = useCart(state => state.resetCart)
+
+  const createOrderMutation = useMutation({
+    mutationFn: () =>
+      createOrder(
+        cartItems.map((item) => ({
+          productId: item.product.id,
+          quantity: item.quantity,
+          price: item.product.price, // MANAGE FORM SERVER SIDE
+        }))
+      ),
+    onSuccess: (data) => {
+      console.log(data);
+
+      resetCart();
+    },
+    onError: (error) => {
+      console.log(error);
+    },
+  });
+
   const onCheckout = async () => {
-    // send order to server
-    //reset the cart in store
-    resetCart();
-  }
+    createOrderMutation.mutate();
+  };
 
   if (cartItems.length === 0) {
-    return (
-      <View>
-        <Text bold className="mx-auto text-2xl">No Items in cart</Text>
-        <Link href="/" asChild>
-          <Button className="max-w-max mx-auto mt-4">
-            <ButtonText>Add Now</ButtonText>
-          </Button>
-        </Link>
-      </View>
-    )
+    return <Redirect href={'/'} />;
   }
 
   return (
     <FlatList
-      contentContainerClassName="gap-2 mx-auto max-w-[80%] w-full"
       data={cartItems}
+      contentContainerClassName="gap-2 max-w-[960px] w-full mx-auto p-2"
       renderItem={({ item }) => (
         <HStack className="bg-white p-3">
           <VStack space="sm">
@@ -43,7 +54,7 @@ export default function CartPage() {
       )}
       ListFooterComponent={() => (
         <Button onPress={onCheckout}>
-          <ButtonText>Check Out</ButtonText>
+          <ButtonText>Checkout</ButtonText>
         </Button>
       )}
     />
