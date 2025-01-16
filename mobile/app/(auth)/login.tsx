@@ -1,3 +1,4 @@
+import { loginUser } from "@/api/auth";
 import { Button, ButtonText } from "@/components/ui/button";
 import { FormControl } from "@/components/ui/form-control";
 import { Heading } from "@/components/ui/heading";
@@ -5,7 +6,9 @@ import { EyeIcon, EyeOffIcon } from "@/components/ui/icon";
 import { Input, InputField, InputIcon, InputSlot } from "@/components/ui/input";
 import { Text } from "@/components/ui/text";
 import { VStack } from "@/components/ui/vstack";
-import { Link } from "expo-router";
+import { useAuth } from "@/store/authStore";
+import { useMutation } from "@tanstack/react-query";
+import { Link, Redirect, useRouter } from "expo-router";
 import { Mail } from "lucide-react-native";
 import { useState } from "react";
 
@@ -18,8 +21,32 @@ export default function LoginPage() {
          return !showState;
       });
    };
+
+   const router = useRouter();
+   const setUser = useAuth(state => state.setUser);
+   const setToken = useAuth(state => state.setToken);
+   const isLoggedIn = useAuth(state => !!state.token);
+
+   const loginMutation = useMutation({
+      mutationFn: () => loginUser(email, password),
+      onSuccess: (data) => {
+         if (data.user && data.token) {
+            setUser(data.user);
+            setToken(data.token);
+         }
+         router.push('/')
+      },
+      onError: (error) => {
+         console.log(error);
+      },
+   });
+
+   if (isLoggedIn) {
+      return <Redirect href={'/'} />;
+   }
+
    return (
-      <FormControl className="p-4 rounded-lg">
+      <FormControl className="p-4 rounded-lg" isInvalid={loginMutation.error}>
          <VStack space="xl">
             <Heading className="text-center ">Login to your account</Heading>
             <VStack space="md">
@@ -48,10 +75,7 @@ export default function LoginPage() {
             </Text>
             <Button
                className="mx-auto"
-               onPress={() => {
-                  // setShowModal(false);
-                  // console.log("Login Page")
-               }}
+               onPress={() => loginMutation.mutate()}
             >
                <ButtonText className="text-typography-0">Now</ButtonText>
             </Button>
