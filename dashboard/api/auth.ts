@@ -8,11 +8,11 @@ export async function login(email: string, password: string) {
       body: JSON.stringify({ email, password }),
    });
    const data = await res.json();
-   if (!res.ok) {
+   if (!data.success) {
       console.log(data);
-      throw Error('Failed to login');
+      throw Error(data.message);
    }
-   return data;
+   return data.user;
 }
 export async function signup(email: string, password: string) {
    const res = await fetch(`${API_URL}/auth/register`, {
@@ -20,11 +20,12 @@ export async function signup(email: string, password: string) {
       headers: {
          'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ email, password }),
+      body: JSON.stringify({ email, password , name:"unkown User", role:"seller"}),
    });
    const data = await res.json();
-   if (!res.ok) {
-      throw Error('Failed to login');
+   console.log(data);
+   if (!data.success) {
+      throw Error(data.message);
    }
-   return data;
+   return data.user;
 }

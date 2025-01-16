@@ -26,9 +26,8 @@ export async function handleSignup(email: string, password: string) {
    )}`;
    try {
       const res = await signup(email, password);
-      if (res.token) {
-         cookies().set('token', res.token, { maxAge: 10800 });
-         redirectUrl = '/';
+      if (res) {
+         redirectUrl = '/login?errorMessage='+encodeURIComponent('LOGIN_NOW');
       }
    } catch (error) {
       console.log(error);
