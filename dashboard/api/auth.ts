@@ -9,7 +9,6 @@ export async function login(email: string, password: string) {
    });
    const data = await res.json();
    if (!data.success) {
-      console.log(data);
       throw Error(data.message);
    }
    return data.user;
@@ -23,7 +22,6 @@ export async function signup(email: string, password: string) {
       body: JSON.stringify({ email, password , name:"unkown User", role:"seller"}),
    });
    const data = await res.json();
-   console.log(data);
    if (!data.success) {
       throw Error(data.message);
    }

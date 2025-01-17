@@ -22,7 +22,6 @@ export default function CartPage() {
         }))
       ),
     onSuccess: (data) => {
-      console.log(data);
 
       resetCart();
     },

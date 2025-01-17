@@ -20,7 +20,6 @@ export async function createProduct(
          body: JSON.stringify({ name, description, price }),
       });
       const data = await res.json();
-      console.log(data);
       if (!data.success) {
          if (res.status === 401) {
             redirectUrl = '/login';
