@@ -8,7 +8,7 @@ export async function createProduct(
    description: string,
    price: number
 ) {
-   let redirectUrl = '/dashboard/products';
+   let redirectUrl = '/products';
    try {
       const token = cookies().get('token')?.value;
       const res = await fetch(`${API_URL}/products`, {
@@ -19,17 +19,17 @@ export async function createProduct(
          },
          body: JSON.stringify({ name, description, price }),
       });
-      if (!res.ok) {
-         console.log(res);
+      const data = await res.json();
+      console.log(data);
+      if (!data.success) {
          if (res.status === 401) {
-            cookies().delete('token');
             redirectUrl = '/login';
          } else {
-            throw new Error('Failed to create product: ');
+            throw new Error(data.error);
          }
       }
    } catch (error: unknown) {
-      redirectUrl = `/dashboard/products/create?errorMessage=${encodeURIComponent(
+      redirectUrl = `/products/create?errorMessage=${encodeURIComponent(
          'Failed to create product'
       )}`;
    } finally {
