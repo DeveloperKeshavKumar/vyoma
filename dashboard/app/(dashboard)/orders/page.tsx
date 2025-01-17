@@ -7,7 +7,6 @@ import Link from 'next/link';
 
 export default async function OrdersPage() {
    const orders = await fetchOrders();
-
    return (
       <Card className="w-full max-w-screen-lg">
          <HStack className="p-4 border-b border-gray-200 gap-4">

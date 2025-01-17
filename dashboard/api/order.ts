@@ -7,6 +7,7 @@ export async function fetchOrders() {
       headers: {
         Authorization: token ?? '',
         'Content-Type': 'application/json',
+        'Cache-Control': 'no-cache',
       },
     });
     if (!response.ok) {
@@ -14,9 +15,9 @@ export async function fetchOrders() {
       throw new Error('Failed to fetch orders');
     }
     const data = await response.json();
-    return data;
+    return data.orders;
   } catch (error) {
-    console.error(error);
+    console.error(error.message);
     return [];
   }
 }
