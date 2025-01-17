@@ -12,7 +12,12 @@ export const listOrders = async (req: Request, res: Response) => {
       const orders = await db.select().from(ordersTable).where(eq(ordersTable.userId, Number(req.user?.id)));
       res.status(200).json({ orders });
    } catch (error) {
-
+      res.status(500).json({
+         success: false,
+         message: "Internal Server Error",
+         req:req.headers,
+         error: error,
+      });
    }
 }
 export const getOrderById = async (req: Request, res: Response) => {
@@ -33,7 +38,7 @@ export const getOrderById = async (req: Request, res: Response) => {
       }
 
 
-      res.status(200).json({ result });
+      res.status(200).json({ order: mergedOrder });
    } catch (error: any) {
       res.status(500).json({
          success: false,

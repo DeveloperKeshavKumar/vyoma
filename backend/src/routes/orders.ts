@@ -6,8 +6,8 @@ import { verifytoken } from "../middlewares/auth.js";
 
 const router = Router();
 
-router.get('/', listOrders);
-router.get('/:id', getOrderById);
+router.get('/', verifytoken, listOrders);
+router.get('/:id', verifytoken, getOrderById);
 router.post('/', verifytoken, validateData(createOrderWithItemsSchema), createOrder);
 router.put('/:id',verifytoken, validateData(updateOrderSchema), updateOrder);
 router.delete('/:id', deleteOrder);
