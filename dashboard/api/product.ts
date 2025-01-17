@@ -1,9 +1,9 @@
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 export async function listProducts() {
-  const res = await fetch(`${API_URL}/products`);
+  const res = await fetch(`${API_URL}/products`, {cache:"no-cache"});
   const data = await res.json();
-  if (data.success === false) {
-    throw new Error(data.message || data.error);
+  if (!res.ok) {
+    throw new Error("Error while fetching products");
   }
   return data.products;
 }
